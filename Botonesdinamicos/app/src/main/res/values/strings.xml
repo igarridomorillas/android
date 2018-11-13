@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Botones dinamicos</string>
+    <string name="anadir">Añadir</string>
+    <string name="borrarTodos">Borrar todos</string>
+    <string name="reset">Reset</string>
+</resources>
