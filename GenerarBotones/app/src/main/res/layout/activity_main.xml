@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tvNumeroBotones"
+        android:textSize="20sp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/numeroBotones"
+        android:layout_above="@+id/btAceptar"/>
+
+    <EditText
+        android:id="@+id/etNumero"
+        android:maxLength="3"
+        android:inputType="number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btAceptar"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/tvNumeroBotones"/>
+
+
+    <Button
+        android:id="@+id/btAceptar"
+        android:onClick="onClickAceptar"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/aceptar"/>
+
+    <TextView
+        android:id="@+id/tvTiempo"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:layout_below="@+id/btAceptar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

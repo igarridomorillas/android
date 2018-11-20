@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Generar Botones</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="numeroBotones">Número de botones</string>
+    <string name="hasTardadoSegundos">Has tardado %.2f segundos</string>
+    <string name="boton">Botón</string>
+    <string name="error">Debe introducir un número</string>
+</resources>
