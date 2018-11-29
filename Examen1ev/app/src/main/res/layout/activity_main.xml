@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/btAnadirIzq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/llIzquierda"
+                android:clickable="true"
+                android:onClick="onClickEliminar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btAnadirIzq"
+            android:tag="izquierda"
+            android:onClick="onClickAnadir"
+            android:text="@string/anadir"
+            android:layout_above="@+id/btEliminarIzq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btEliminarIzq"
+            android:onClick="onClickEliminar"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/eliminar"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/btAnadirDer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/llDerecha"
+                android:clickable="true"
+                android:onClick="onClickEliminar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btAnadirDer"
+            android:onClick="onClickAnadir"
+            android:text="@string/anadir"
+            android:layout_above="@+id/btEliminarDer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/btEliminarDer"
+            android:onClick="onClickEliminar"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/eliminar"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
