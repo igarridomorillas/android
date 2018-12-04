@@ -37,16 +37,18 @@ public class MainActivity extends AppCompatActivity
 
             for(int i = 0; i < numIzquierda; i++)
             {
-                Button btRectangulo = new Button(this);
-                anadirRectangulo(llIzquierda, btRectangulo, colorIzquierda);
                 colorIzquierda = alternarColor(colorIzquierda);
+                Button btRectangulo = new Button(this);
+                btRectangulo.setClickable(false);
+                anadirRectangulo(llIzquierda, btRectangulo, colorIzquierda);
             }
 
             for(int i = 0; i < numDerecha; i++)
             {
+                colorDerecha = alternarColor(colorDerecha);
                 Button btRectangulo = new Button(this);
+                btRectangulo.setClickable(false);
                 anadirRectangulo(llDerecha, btRectangulo, colorDerecha);
-                colorIzquierda = alternarColor(colorIzquierda);
             }
 
         }
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity
     public void onClickAnadir(View view)
     {
         Button btRectangulo = new Button(this);
+        btRectangulo.setClickable(false);
         if(view.getId() == R.id.btAnadirIzq)
         {
             colorIzquierda = alternarColor(colorIzquierda);
@@ -92,12 +95,12 @@ public class MainActivity extends AppCompatActivity
     {
         // llIzquierda.removeView(llIzquierda.getChildAt(llIzquierda.getChildCount() - 1));
 
-        if(view.getId() == R.id.btEliminarIzq && llIzquierda.getChildCount() > 0)
+        if((view.getId() == R.id.btEliminarIzq || view.getId() == R.id.llIzquierda) && llIzquierda.getChildCount() > 0)
         {
             llIzquierda.removeViewAt(llIzquierda.getChildCount() - 1);
             colorIzquierda = alternarColor(colorIzquierda);
         }
-        else if(llDerecha.getChildCount() > 0)
+        else if((view.getId() == R.id.btEliminarDer || view.getId() == R.id.llDerecha) && llDerecha.getChildCount() > 0)
         {
             llDerecha.removeViewAt(llDerecha.getChildCount() - 1);
             colorDerecha = alternarColor(colorDerecha);
