@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Base de datos</string>
     <string name="anadir">Añadir</string>
+    <string name="yaExiste">El texto ya existe</string>
 </resources>

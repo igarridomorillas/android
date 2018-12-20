@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Agenda</string>
+    <string name="contactos">Contactos</string>
+    <string name="nuevoContacto">Nuevo contacto</string>
+
+    <!-- Crear contacto -->
+    <string name="datosContacto">Datos del contacto</string>
+    <string name="nombre">Nombre</string>
+    <string name="telefono">Teléfono</string>
+    <string name="icono">Icono</string>
+    <string name="aceptar">Aceptar</string>
+
+</resources>
