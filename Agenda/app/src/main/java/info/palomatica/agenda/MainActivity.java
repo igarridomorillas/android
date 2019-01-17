@@ -143,7 +143,12 @@ public class MainActivity extends AppCompatActivity
             });
 
 
+            View view = new View(this);
+            view.setLayoutParams(new LinearLayout.LayoutParams(10,15));
+
+
             llContactos.addView(rlContacto);
+            llContactos.addView(view);
         }
     }
 
