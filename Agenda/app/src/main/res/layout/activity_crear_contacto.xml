@@ -39,6 +39,7 @@
 
     <EditText
         android:id="@+id/etTelefono"
+        android:inputType="phone"
         app:layout_constraintTop_toBottomOf="@+id/etNombre"
         app:layout_constraintLeft_toRightOf="@+id/tvTelefono"
         app:layout_constraintRight_toRightOf="parent"
@@ -55,9 +56,11 @@
 
     <ImageButton
         android:id="@+id/ibIcono"
+        android:onClick="onClickCategoria"
         app:layout_constraintTop_toBottomOf="@+id/etTelefono"
         app:layout_constraintLeft_toRightOf="@+id/tvIcono"
-        android:src="@drawable/ic_amigo"
+        android:background="@drawable/cat_amigos"
+        android:tag="0"
         android:layout_marginLeft="10dp"
         android:layout_width="50dp"
         android:layout_height="50dp" />
