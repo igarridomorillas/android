@@ -102,4 +102,16 @@ public class ContactosDB extends SQLiteOpenHelper
     {
         db.execSQL("delete from contactos where _id = " + id);
     }
+
+    public Contacto getContacto(int id)
+    {
+        Cursor cursor = db.rawQuery("SELECT _id, nombre, telefono, categoria FROM contactos where _id = " + id, null);
+        cursor.moveToFirst();
+        Contacto contacto = new Contacto();
+        contacto.setId(cursor.getInt(0))
+                .setNombre(cursor.getString(1))
+                .setTelefono(cursor.getString(2))
+                .setCategoria(cursor.getInt(3));
+        return contacto;
+    }
 }

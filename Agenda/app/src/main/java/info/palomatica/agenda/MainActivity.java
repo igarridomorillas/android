@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity
     private final int REQUEST_CODE_CREAR_CONTACTO = 0;
     private LinearLayout llContactos;
 
+    public final static String KEY_ID_CONTACTO = "key_contacto";
+
     private ContactosDB contactosDB;
 
     @Override
@@ -129,7 +131,9 @@ public class MainActivity extends AppCompatActivity
                             }
                             else if(which == 1) // SMS
                             {
-
+                                Intent intent = new Intent(MainActivity.this, EnviarSMSActivity.class);
+                                intent.putExtra(KEY_ID_CONTACTO, contacto.getId());
+                                startActivity(intent);
                             }
 
                             dialog.dismiss();
