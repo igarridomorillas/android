@@ -1,19 +1,32 @@
 package info.palomatica.agenda;
 
+import android.Manifest;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -25,6 +38,10 @@ public class MainActivity extends AppCompatActivity
     public final static String KEY_ID_CONTACTO = "key_contacto";
 
     private ContactosDB contactosDB;
+
+    // Concesión de permisos
+    private final static int REQUEST_CODE_PERMISO_LLAMAR = 0;
+    private final static int REQUEST_CODE_PERMISO_IMPORTAR_CONTACTOS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -124,10 +141,18 @@ public class MainActivity extends AppCompatActivity
                         {
                             if(which == 0) // Llamar
                             {
-                                Intent intent = new Intent(Intent.ACTION_CALL);
-                                intent.setData(Uri.parse("tel:" + contacto.getTelefono()));
 
-                                startActivity(intent);
+                                if(!hayPermiso(Manifest.permission.CALL_PHONE))
+                                {
+                                    ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CODE_PERMISO_LLAMAR);
+                                }
+                                else
+                                {
+                                    Intent intent = new Intent(Intent.ACTION_CALL);
+                                    intent.setData(Uri.parse("tel:" + contacto.getTelefono()));
+                                    startActivity(intent);
+                                }
+
                             }
                             else if(which == 1) // SMS
                             {
@@ -176,5 +201,129 @@ public class MainActivity extends AppCompatActivity
             dibujarContactos();
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        if(item.getItemId() == R.id.mImportar)
+        {
+            new ImportarContactosTask().execute();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void importarContactos()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+        {
+
+            // Si no hay permisos, se piden
+            if(!hayPermiso(Manifest.permission.READ_CONTACTS))
+            {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, REQUEST_CODE_PERMISO_IMPORTAR_CONTACTOS);
+                return;
+            }
+        }
+
+
+        ContentResolver cr = getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
+        if (cur.getCount() > 0)
+        {
+            while (cur.moveToNext())
+            {
+                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                String nombre = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0)
+                {
+                    Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?", new String[]{id}, null);
+                    if (pCur.moveToNext())
+                    {
+                        String telefono = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+                        Contacto contacto = new Contacto();
+                        contacto.setNombre(nombre);
+                        contacto.setTelefono(telefono);
+                        contacto.setCategoria(Contacto.CAT_AMIGOS);
+
+                        contactosDB.insertarContacto(contacto);
+                    }
+                    pCur.close();
+                }
+            }
+        }
+     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+
+        if(requestCode == REQUEST_CODE_PERMISO_IMPORTAR_CONTACTOS && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        {
+            // Permisos concedidos
+            new ImportarContactosTask().execute();
+        }
+        else if(requestCode == REQUEST_CODE_PERMISO_LLAMAR && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        {
+            // Permiso de llamada concedido
+        }
+    }
+
+
+    private boolean hayPermiso(String permiso)
+    {
+        int result = ContextCompat.checkSelfPermission(this, permiso);
+        if (result == PackageManager.PERMISSION_GRANTED)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private class ImportarContactosTask extends AsyncTask<Void, Void, Void>
+    {
+        private ProgressBar pbImportando;
+
+        @Override
+        protected void onPreExecute()
+        {
+            pbImportando = findViewById(R.id.pbImportando);
+            pbImportando.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids)
+        {
+            importarContactos();
+            try
+            {
+                Thread.sleep(5000);
+            } catch (InterruptedException e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid)
+        {
+
+            dibujarContactos();
+            pbImportando.setVisibility(View.INVISIBLE);
+
+        }
     }
 }

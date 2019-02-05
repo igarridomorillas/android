@@ -21,9 +21,9 @@ public class EnviarSMSActivity extends AppCompatActivity
 
 
         // onClick
-        String mensaje = etMensaje.getText().toString();
-        SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(contacto.getTelefono(), null, mensaje, null, null);
+        //String mensaje = etMensaje.getText().toString();
+        //SmsManager sms = SmsManager.getDefault();
+        //sms.sendTextMessage(contacto.getTelefono(), null, mensaje, null, null);
 
 
     }

@@ -20,4 +20,10 @@
     <string name="dialogoEnviarSMS">Enviar SMS</string>
     <string name="dialogoLlamar">Realizar una llamada</string>
 
+    <!-- Menu -->
+    <string name="opciones">Opciones</string>
+    <string name="importar">Importar contactos</string>
+
+    <string name="importando">Importando contactos</string>
+
 </resources>

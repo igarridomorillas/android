@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Capitales de Europa</string>
+    <string name="empezar">Empezar</string>
+    <string name="siguiente">Siguiente</string>
+    <string name="numeroTotal">Número total de preguntas</string>
+    <string name="preguntaNumero">Pregunta número</string>
+    <string name="aciertos">Aciertos</string>
+    <string name="fallos">Fallos</string>
+    <string name="calificacion">Calificación</string>
+    <string name="resultado">Resultado</string>
+</resources>
